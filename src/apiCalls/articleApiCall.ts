@@ -1,0 +1,54 @@
+import { Article } from "@/generated/prisma";
+import { DOMAIN } from "@/utils/constants";
+import { SingleArticle } from "@/utils/types";
+
+// Get Articles based on pageNumber
+export async function getArticles(
+  pageNumber: string | undefined
+): Promise<Article[]> {
+  const response = await fetch(
+    `${DOMAIN}/api/articles?pageNumber=${pageNumber}`
+  );
+
+  if (!response.ok) {
+    throw Error("Failed to fetch articles");
+  }
+  return response.json();
+}
+
+// Get Articles  count
+export async function getArticlesCount(): Promise<number> {
+  const response = await fetch(`${DOMAIN}/api/articles/count`);
+
+  if (!response.ok) {
+    throw Error("Failed to get articles count ");
+  }
+  const { count } = (await response.json()) as { count: number };
+  return count;
+}
+
+// Get Articles based on searchText
+export async function getArticlesBasedOnSearch(
+  searchText: string
+): Promise<Article[]> {
+  const response = await fetch(
+    `${DOMAIN}/api/articles/search?searchText=${searchText}`
+  );
+
+  if (!response.ok) {
+    throw Error("Failed to fetch articles");
+  }
+  return response.json();
+}
+
+// get single article by id
+export async function getSingleArticle(articleId: string): Promise<SingleArticle> {
+
+  const response = await fetch(`${DOMAIN}/api/articles/${articleId}` , {
+    cache:"no-store"
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch article");
+  }
+  return response.json();
+}

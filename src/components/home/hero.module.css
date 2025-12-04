@@ -1,0 +1,20 @@
+.hero {
+    color: rgb(10 , 9 , 9);
+    padding: 0 30px;
+    height: calc(100vh - 130px);
+}
+@media (max-width : 780px){
+    .hero{
+        height: auto;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 15px;
+    }
+    .heroLeft{
+        background-color: snow;
+        margin: 20px 0;
+        border-radius: 20px;
+        width: 100%;
+        padding: 15px;
+    }
+}

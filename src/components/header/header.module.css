@@ -1,0 +1,104 @@
+.header {
+  height: 80px;
+  background-color: rgb(227, 225, 225);
+  border-bottom: 3px solid rgb(144, 144, 144);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+.headerContainer {
+  /* background-color: red; */
+   /* position: relative; */
+   /* padding:0 0.5rem; */
+}
+.navbar {
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  /* color: rgb(176, 15, 176); */
+}
+.menu {
+  font-size: 40px;
+  font-weight: bold;
+  color: #202121;
+  cursor: pointer;
+  display: none;
+}
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.navLink {
+  font-size: 20px;
+  font-weight: 600;
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn {
+  color: #fff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+
+
+
+@media (max-width: 1080px) {
+  .logo {
+    display: none;
+  }
+  .menu {
+    display: block;
+  }
+  .navLinksWrapper {
+    position: absolute;
+    left: 0;
+    top: calc(100%);
+    width: 100%;
+    background-color: inherit;
+    z-index: 100;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: all 0.3s ease-in;
+    background-color: rgb(227, 225, 225);
+  }
+  .navLinks {
+    flex-direction: column;
+    gap: 30px;
+    align-items: flex-start;
+    padding: 1rem;
+    justify-content: center;
+  }
+  .navLink {
+    margin-left: 2rem;
+  }
+  .close {
+    color: #000;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .animate {
+    color: red;
+    transform: rotate(90deg);
+  }
+}
