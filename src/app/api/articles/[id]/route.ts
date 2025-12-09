@@ -141,11 +141,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       where: { id: parseInt(id) },
     });
 
-    //deleting the comments that belong to this article
-    const commentIds: number[] = article?.comments.map((comment) => comment.id);
-    await prisma.comment.deleteMany({
-      where: { id: { in: commentIds } },
-    });
+   
 
     return NextResponse.json({ message: "Article Deleted" }, { status: 200 });
   } catch (error) {
