@@ -1,9 +1,11 @@
 import { getSingleArticle } from "@/apiCalls/articleApiCall";
 import AddCommentForm from "@/components/comments/AddCommentForm";
 import CommentItem from "@/components/comments/CommentItem";
+import prisma from "@/utils/db";
 import { SingleArticle } from "@/utils/types";
 import { verifyTokenFromPage } from "@/utils/verifyToken";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 interface SingleArticlePageProps {
   params: Promise<{ id: string }>;
@@ -16,7 +18,28 @@ const SingleArticlePage = async ({ params }: SingleArticlePageProps) => {
   const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenFromPage(token);
 
-  const article: SingleArticle = await getSingleArticle(id);
+  // const article: SingleArticle = await getSingleArticle(id);
+    const article = await prisma.article.findUnique({
+        where: { id: parseInt(id) },
+        include: {
+          comments: {
+            include: {
+              user: {
+                select: {
+                  username: true,
+                },
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+        },
+      }) as SingleArticle ;
+
+      if(!article){
+        notFound();
+      }
 
   return (
     <section className="fix-height container mx-auto w-full px-5 pt-8 md:w-3/4 ">

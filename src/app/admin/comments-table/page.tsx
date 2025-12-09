@@ -1,6 +1,5 @@
 import { getAllComments } from "@/apiCalls/adminApiCall";
 import { Comment } from "@/generated/prisma";
-import { verifyTokenFromPage } from "@/utils/verifyToken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import DeleteCommentButton from "./DeleteCommentButton";
@@ -9,9 +8,6 @@ const AdminCommentsTable = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("jwtToken")?.value;
   if (!token) redirect("/");
-
-  const payload = verifyTokenFromPage(token);
-  if (payload?.isAdmin === false) redirect("/");
 
   const comments: Comment[] = await getAllComments(token);
 

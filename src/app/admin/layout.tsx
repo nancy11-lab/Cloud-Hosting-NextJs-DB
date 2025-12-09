@@ -1,6 +1,9 @@
 import React from "react";
 import AdminSidebar from "./AdminSidebar";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { verifyTokenFromPage } from "@/utils/verifyToken";
 
 interface AdminDashboardLayoutProps {
   children: React.ReactNode;
@@ -8,15 +11,26 @@ interface AdminDashboardLayoutProps {
 export const metadata: Metadata = {
   title: "Admin Dashboard",
   description: "This is admin dashboard",
-}; 
+};
 
-const AdminDashboardLayout = ({ children }: AdminDashboardLayoutProps) => {
+const AdminDashboardLayout = async ({
+  children,
+}: AdminDashboardLayoutProps) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwtToken")?.value;
+  if (!token) redirect("/");
+
+  const payload = verifyTokenFromPage(token);
+  if (payload?.isAdmin === false) redirect("/");
+  
   return (
     <div className="overflow-height flex items-start justify-between overflow-hidden">
       <div className="overflow-height w-15 lg:w-1/5 bg-purple-600 text-white p-3 lg:p-5">
         <AdminSidebar />
       </div>
-      <div className="overflow-height w-full lg:w-4/5 overflow-y-scroll">{children}</div>
+      <div className="overflow-height w-full lg:w-4/5 overflow-y-scroll">
+        {children}
+      </div>
     </div>
   );
 };

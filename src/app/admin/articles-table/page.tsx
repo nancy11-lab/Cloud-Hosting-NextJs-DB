@@ -2,28 +2,19 @@ import { getArticles, getArticlesCount } from "@/apiCalls/articleApiCall";
 import Pagination from "@/components/articles/Pagination";
 import { Article } from "@/generated/prisma";
 import { ARTICLE_PER_PAGE } from "@/utils/constants";
-import { verifyTokenFromPage } from "@/utils/verifyToken";
-import { cookies } from "next/headers";
+
 import Link from "next/link";
-import { redirect } from "next/navigation";
+
 import DeleteArticleButton from "./DeleteArticleButton";
 import prisma from "@/utils/db";
 
 interface AdminArticlesTableProps {
   searchParams: Promise<{ pageNumber: string }>;
 }
-const AdminArticlesTable = async ({
-  searchParams,
-}: AdminArticlesTableProps) => {
+const AdminArticlesTable = async ({ searchParams,}: AdminArticlesTableProps) => {
   const { pageNumber } = await searchParams;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get("jwtToken")?.value;
-  if (!token) redirect("/");
-
-  const payload = verifyTokenFromPage(token);
-  if (payload?.isAdmin === false) redirect("/");
-
+ 
   // send request to get Articles
   const articles: Article[] = await getArticles(pageNumber);
   // send request to get count of articles in db

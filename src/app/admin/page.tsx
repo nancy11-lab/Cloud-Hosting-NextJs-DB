@@ -1,16 +1,8 @@
-import { cookies } from "next/headers";
+
 import AddArticleForm from "./AddArticleForm";
-import { verifyTokenFromPage } from "@/utils/verifyToken";
-import { redirect } from "next/navigation";
 
-const AdminPage = async () => {
+const AdminPage =  () => {
   
-  const cookieStore = await cookies();
-  const token = cookieStore.get("jwtToken")?.value;
-  if (!token) redirect("/");
-
-  const payload = verifyTokenFromPage(token);
-  if (payload?.isAdmin === false) redirect("/");
 
   return (
     <div className="fix-height flex items-center justifiy-center px-5 lg:px-20">
