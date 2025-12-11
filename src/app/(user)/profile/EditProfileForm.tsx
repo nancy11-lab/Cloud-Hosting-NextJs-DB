@@ -57,21 +57,21 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Enter your username"
-        className="border-2 border-gray-300 rounded-md p-2"
+        className="border-2 border-gray-300 rounded-md p-2 focus-within:outline-purple-400"
       />
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
-        className="border-2 border-gray-300 rounded-md p-2"
+        className="border-2 border-gray-300 rounded-md p-2 focus-within:outline-purple-400"
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter your password"
-        className="border-2 border-gray-300 rounded-md p-2"
+        className="border-2 border-gray-300 rounded-md p-2 focus-within:outline-purple-400"
       />
       <button
         type="submit"

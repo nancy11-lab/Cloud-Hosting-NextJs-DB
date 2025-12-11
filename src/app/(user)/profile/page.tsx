@@ -20,14 +20,14 @@ const ProfilePage = async () => {
   return (
     <section className="fix-height container m-auto px-7 py-2 ">
       <div className="mt-3 border-1 border-gray-300 p-2 rounded-md">
-        <h2 className="text-2xl text-gray-950 font-bold px-3  mb-3">
-          Username :
+        <h2 className="text-2xl text-gray-950 font-bold px-1  sm:px-3  mb-3">
+          Username:{" "}
           <span className="text-blue-600 font-semibold text-xl">
             {user.username}
           </span>
         </h2>
-        <h3 className="text-2xl text-gray-950 font-bold px-3">
-          Email :
+        <h3 className="text-2xl text-gray-950 font-bold px-1  sm:px-3">
+          Email:{" "}
           <span className="text-blue-600 font-semibold text-xl">
             {user.email}
           </span>

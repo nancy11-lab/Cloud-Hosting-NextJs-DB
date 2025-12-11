@@ -18,7 +18,7 @@ const ProfileContainer = ({ payload }: ProfileContainerProps) => {
 
   return (
     <>
-      <div className="relative bg-red-300">
+      <div className="relative px-2 py-1 bg-gray-300">
         <strong
           onClick={showContainerHandler}
           className=" text-blue-800 md:text-xl capitalize cursor-pointer"
@@ -26,14 +26,15 @@ const ProfileContainer = ({ payload }: ProfileContainerProps) => {
           {payload?.username}
         </strong>
         {show && (
-          <div className="w-50 flex flex-col  justify-center py-3 border-2 rounded-lg border-gray-300 bg-white absolute top-10 right-0 ">
+          <div className="w-30 h-30 sm:w-50 md:w-60 flex flex-col  justify-center  border-2 rounded-lg border-gray-300 bg-white absolute top-12 right-0 ">
             <Link
               onClick={() => setShow(false)}
-              className="w-full py-1 px-3 border-b-1 border-gray-200 mb-2  hover:bg-gray-300 transition"
-              href={`/profile`}
+              className="w-full py-1 px-3   mb-2  hover:bg-gray-300 transition"
+              href="/profile"
             >
               Profile
             </Link>
+            <hr className="mb-2 text-gray-300"/>
             <LogoutButton />
           </div>
         )}
