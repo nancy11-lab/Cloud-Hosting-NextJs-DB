@@ -15,7 +15,7 @@ const ProfilePage = async () => {
   }
   const payload = await verifyTokenFromPage(token);
   if (!payload) redirect("/");
-  const user = await getUserProfile(token,payload.id);
+  const user : User = await getUserProfile(token,payload.id);
 
   return (
     <section className="fix-height container m-auto px-7 py-2 ">
@@ -40,6 +40,7 @@ const ProfilePage = async () => {
         </h2>
        <EditProfileForm user={user}/>
       </div>
+      {/* delete-Profile */}
       <div className="mt-5 mb-7 flex justify-end ">
        <DeleteProfileButton userId={user.id}/>
       </div>
