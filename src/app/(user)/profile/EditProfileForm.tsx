@@ -1,9 +1,9 @@
-
 "use client";
+import ButtonSpinner from "@/components/ButtonSpinner";
 import { User } from "@/generated/prisma";
 import { DOMAIN } from "@/utils/constants";
 import { UpdateUserDto } from "@/utils/dtos";
-import {updateUserSchema } from "@/utils/validationSchema";
+import { updateUserSchema } from "@/utils/validationSchema";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -18,32 +18,36 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const editFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const dataToSend : UpdateUserDto= {
-        username,
-        email
+    const dataToSend: UpdateUserDto = {
+      username,
+      email,
+    };
+    if (password.trim() !== "") {
+      dataToSend.password = password;
     }
-    if(password.trim() !== ""){
-        dataToSend.password = password;
-    }
-     const validation = updateUserSchema.safeParse(dataToSend);
+    const validation = updateUserSchema.safeParse(dataToSend);
     if (!validation.success) {
       toast.error(validation.error.issues[0].message);
       return;
     }
     try {
+      setLoading(true);
       await axios.put(`${DOMAIN}/api/users/profile/${user.id}`, dataToSend);
       router.replace("/");
-      router.refresh();
+      setLoading(false);
       setPassword("");
+      router.refresh();
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.response?.data.message);
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -77,7 +81,7 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
         type="submit"
         className="bg-purple-600 hover:bg-purple-800 transition-colors py-2 font-semibold text-xl rounded-md text-white cursor-pointer"
       >
-        Edit
+         {loading ? <ButtonSpinner /> : "Edit"}
       </button>
     </form>
   );
