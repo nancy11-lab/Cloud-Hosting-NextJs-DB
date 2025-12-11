@@ -3,12 +3,16 @@ import styles from "./header.module.css";
 import Navbar from "./Navbar";
 import { cookies } from "next/headers";
 import { verifyTokenFromPage } from "@/utils/verifyToken";
-import LogoutButton from "./LogoutButton";
+import ProfileContainer from "./ProfileContainer";
+
+export const dynamic = "force-dynamic"
 
 const Header = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenFromPage(token);
+
+  console.log("username: " ,payload?.username);
 
   return (
     <header className={styles.header}>
@@ -21,10 +25,11 @@ const Header = async () => {
         <div className={styles.right}>
           {payload ? (
             <>
-            <strong className=" text-blue-800 md:text-xl capitalize">
+            {/* <strong className=" text-blue-800 md:text-xl capitalize">
               {payload?.username}
             </strong>
-            <LogoutButton />
+            <LogoutButton /> */}
+            <ProfileContainer payload={payload} />
             </>
           ) : (
             <>
