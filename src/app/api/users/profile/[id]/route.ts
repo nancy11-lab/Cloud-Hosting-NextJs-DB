@@ -4,6 +4,8 @@ import { verifyToken } from "@/utils/verifyToken";
 import { UpdateUserDto } from "@/utils/dtos";
 import bcrypt from "bcryptjs";
 import { updateUserSchema } from "@/utils/validationSchema";
+import { cookies } from "next/headers";
+import { setCookie } from "@/utils/generateToken";
 
 /**
  * @method DELETE
@@ -35,6 +37,8 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       // deleting the user
       await prisma.user.delete({ where: { id: parseInt(id) } });
 
+      // delete Token
+      (await cookies()).delete("jwtToken");
 
       return NextResponse.json(
         { message: "your profile (account) has been deleted" },
@@ -126,6 +130,11 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
     // if userFromToken.id === user.id => get data from body
     const body = (await request.json()) as UpdateUserDto;
+    //لو الباس جايه فاضيه احذغها من body
+    if(!body.password || body.password.trim() === ""){
+      delete body.password
+    }
+
     const validation = await updateUserSchema.safeParse(body);
     if (!validation.success) {
       const errors = Object.fromEntries(
@@ -134,24 +143,36 @@ export async function PUT(request: NextRequest, { params }: Props) {
       return NextResponse.json({ errors }, { status: 400 });
     }
     // data from body after validation
-    const dataValidated = validation.data;
+    // const dataValidated = validation.data;
     // if user want to change password لازم الاول اعمله تشفير قبل ارساله لقاعده البيانات
-    if (dataValidated.password) {
+    if (body.password) {
       const salt = await bcrypt.genSalt(10);
-      dataValidated.password = await bcrypt.hash(dataValidated.password, salt);
+      body.password = await bcrypt.hash(body.password, salt);
     }
 
     const updateUser = await prisma.user.update({
       where: { id: parseInt(id) },
       data: {
-        username: dataValidated.username,
-        email: dataValidated.email,
-        password: dataValidated.password,
+        username: body.username,
+        email: body.email,
+        ...(body.password && {password: body.password})
+        ,
       },
+    });
+    console.log("username updated" , updateUser.username);
+    //you
+    // call fun setCookie => set cookie with jwt token
+    const cookie = setCookie({
+      id: updateUser.id,
+      isAdmin: updateUser.isAdmin,
+      username: updateUser.username,
     });
 
     const { password, ...other } = updateUser;
-    return NextResponse.json({ ...other }, { status: 200 });
+    return NextResponse.json(
+      { ...other },
+      { status: 200, headers: { "Set-Cookie": cookie } }
+    );
   } catch (error) {
     return NextResponse.json(
       { message: "Internal Server Error" },
