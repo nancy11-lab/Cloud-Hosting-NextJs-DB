@@ -38,7 +38,7 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
         <Link href="/" className={`text-purple-600 ${styles.logo}`}>
           CLOUD
           <GrTechnology />
-          HOSTING
+         POSTS
         </Link>
         {/* menu-icon */}
         <div className={styles.menu}>
