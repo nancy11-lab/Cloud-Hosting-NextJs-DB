@@ -1,35 +1,38 @@
-
 # CloudPosts
 
-CloudPosts is a modern web platform for tech enthusiasts to read, explore, and discuss programming languages, frameworks, and development tools. The platform delivers high-quality technical articles in a clean and organized interface, accessible from any web browser.
+**CloudPosts** is a modern **web platform** for tech enthusiasts to read, explore, and discuss programming languages, frameworks, and development tools. The platform delivers high-quality technical articles in a clean and organized interface, accessible from any web browser.
 
 ## Features
 
-Curated Articles: Browse articles on various programming languages and frameworks.
+- **Curated Articles**: Browse articles on various programming languages and frameworks.  
+- **Interactive Comments**: Registered users can leave comments and engage in discussions.  
+- **Admin Dashboard**: Admins can add, edit, or delete articles and moderate comments.  
+- **Responsive Design**: Works smoothly on both desktop and mobile devices.  
+- **Secure Authentication**: User login with JWT ensures proper access control.  
+- **Markdown Support**: Articles are written in Markdown using React Markdown and remark-gfm.  
 
-Interactive Comments: Registered users can leave comments and engage in discussions.
+## Technologies Used
 
-Admin Dashboard: Admins can add, edit, or delete articles and moderate comments.
+- **Next.js 14** – Server & client rendering, routing, API routes  
+- **React 18** – UI components  
+- **Tailwind CSS 4** – Styling and responsive design  
+- **Prisma ORM** – Database management  
+- **Neon (PostgreSQL)** – Database  
+- **React Markdown + remark-gfm** – Markdown rendering  
+- **JWT Authentication** – Secure login and admin access  
 
-Responsive Design: Works smoothly on both desktop and mobile devices.
+## Getting Started
 
-Secure Authentication: User login with JWT ensures proper access control.
+1. Clone the repository:  
 
-Markdown Support: Articles are written in Markdown using React Markdown and remark-gfm.
+   git clone https://github.com/your-username/cloudposts.git
+
+   npm install
+
+   npm run dev
 
 
-### Technologies Used
+## Deployment
 
-Next.js 16 – Server & client rendering, routing, API routes
+The project is live on Vercel: [View Live Site](https://cloud-hosting-next-js-db.vercel.app/)
 
-React 19 – UI components
-
-Tailwind CSS 4 – Styling and responsive design
-
-Prisma ORM – Database management
-
-Neon (PostgreSQL) – Database
-
-React Markdown + remark-gfm – Markdown rendering
-
-JWT Authentication – Secure login and admin access
