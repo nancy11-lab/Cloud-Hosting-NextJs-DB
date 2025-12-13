@@ -4,14 +4,23 @@ import ButtonSpinner from "@/components/ButtonSpinner";
 import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { FiEye } from "react-icons/fi";
+import { FiEyeOff } from "react-icons/fi";
 
 const LoginForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+    inputRef.current?.focus();
+  }
 
   const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,14 +51,21 @@ const LoginForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         className="border rounded p-2 text-xl border-gray-200 focus-within:outline-blue-600"
       />
-      <input
-        type="password"
+      <div className="relative">
+        <input
+        type={showPassword ? "text" : "password"}
+        ref={inputRef}
+        onBlur={() => setShowPassword(false)}
         name="pass"
         placeholder="Enter your password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border rounded p-2 text-xl border-gray-200 focus-within:outline-blue-600"
+        className="w-full pr-10 border rounded p-2 text-xl border-gray-200 focus-within:outline-blue-600"
       />
+      <button type="button" onClick={toggleShowPassword} className="text-gray-500 hover:text-gray-700 transition-colors absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+        {showPassword ? <FiEye size={20}/> : <FiEyeOff size={20}/>}
+      </button>
+      </div>
       <button
         disabled={loading}
         type="submit"
