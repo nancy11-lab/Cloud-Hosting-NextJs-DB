@@ -6,6 +6,8 @@ import { SingleArticle } from "@/utils/types";
 import { verifyTokenFromPage } from "@/utils/verifyToken";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface SingleArticlePageProps {
   params: Promise<{ id: string }>;
@@ -19,27 +21,28 @@ const SingleArticlePage = async ({ params }: SingleArticlePageProps) => {
   const payload = verifyTokenFromPage(token);
 
   // const article: SingleArticle = await getSingleArticle(id);
-    const article = await prisma.article.findUnique({
-        where: { id: parseInt(id) },
+  const article = (await prisma.article.findUnique({
+    where: { id: parseInt(id) },
+    include: {
+      comments: {
         include: {
-          comments: {
-            include: {
-              user: {
-                select: {
-                  username: true,
-                },
-              },
-            },
-            orderBy: {
-              createdAt: "desc",
+          user: {
+            select: {
+              username: true,
             },
           },
         },
-      }) as SingleArticle ;
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
+  })) as SingleArticle;
 
-      if(!article){
-        notFound();
-      }
+  if (!article) {
+    notFound();
+  }
+  // console.log(article.description);
 
   return (
     <section className="fix-height container mx-auto w-full px-5 pt-8 md:w-3/4 ">
@@ -51,7 +54,21 @@ const SingleArticlePage = async ({ params }: SingleArticlePageProps) => {
         <div className="text-gray-400">
           {new Date(article.createdAt).toDateString()}
         </div>
-        <p className="text-gray-800 text-xl mt-5">{article.description}</p>
+
+        <div
+          className="text-gray-800 text-xl mt-5 prose prose-lg  [&_h1]:text-blue-700
+              [&_h1]:font-extrabold
+              [&_h1]:mb-2
+
+              [&_h2]:text-indigo-600
+              [&_h2]:font-semibold
+              [&_h2]:mt-5
+              [&_h2]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-2"
+        >
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {article.description}
+          </ReactMarkdown>
+        </div>
       </div>
       {/* comments-for singleArticle page */}
       <div>
