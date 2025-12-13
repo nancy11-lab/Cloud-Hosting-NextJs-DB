@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# CloudPosts
 
-First, run the development server:
+CloudPosts is a modern web platform for tech enthusiasts to read, explore, and discuss programming languages, frameworks, and development tools. The platform delivers high-quality technical articles in a clean and organized interface, accessible from any web browser.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Curated Articles: Browse articles on various programming languages and frameworks.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Interactive Comments: Registered users can leave comments and engage in discussions.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Admin Dashboard: Admins can add, edit, or delete articles and moderate comments.
 
-## Learn More
+Responsive Design: Works smoothly on both desktop and mobile devices.
 
-To learn more about Next.js, take a look at the following resources:
+Secure Authentication: User login with JWT ensures proper access control.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Markdown Support: Articles are written in Markdown using React Markdown and remark-gfm.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next.js 16 – Server & client rendering, routing, API routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+React 19 – UI components
+
+Tailwind CSS 4 – Styling and responsive design
+
+Prisma ORM – Database management
+
+Neon (PostgreSQL) – Database
+
+React Markdown + remark-gfm – Markdown rendering
+
+JWT Authentication – Secure login and admin access
