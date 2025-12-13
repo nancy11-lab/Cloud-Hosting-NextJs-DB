@@ -13,8 +13,8 @@
 
 ## Technologies Used
 
-- **Next.js 14** – Server & client rendering, routing, API routes  
-- **React 18** – UI components  
+- **Next.js 16** – Server & client rendering, routing, API routes  
+- **React 19** – UI components  
 - **Tailwind CSS 4** – Styling and responsive design  
 - **Prisma ORM** – Database management  
 - **Neon (PostgreSQL)** – Database  
