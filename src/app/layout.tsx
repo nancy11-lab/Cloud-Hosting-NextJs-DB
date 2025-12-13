@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cloud Hosting ",
-  description: "Cloud Hosting Project",
+  title: "Cloud Posts ",
+  description: "Cloud Posts Project",
 };
 interface RootLayoutProps {
   children : React.ReactNode
