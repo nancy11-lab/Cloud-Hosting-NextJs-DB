@@ -3,17 +3,19 @@ import { DOMAIN } from "@/utils/constants";
 import { SingleArticle } from "@/utils/types";
 
 // Get Articles based on pageNumber
-export async function getArticles(
-  pageNumber: string | undefined
-): Promise<Article[]> {
-  const response = await fetch(
-    `${DOMAIN}/api/articles?pageNumber=${pageNumber}`
-  );
+export async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
+
+ try{
+   const response = await fetch(`${DOMAIN}/api/articles?pageNumber=${pageNumber}`);
 
   if (!response.ok) {
     throw Error("Failed to fetch articles");
   }
   return response.json();
+ }catch(err){
+  console.error("Detailed error fetching article" , err);
+  throw err;
+ }
 }
 
 // Get Articles  count
