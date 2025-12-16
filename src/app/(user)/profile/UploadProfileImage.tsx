@@ -31,7 +31,7 @@ const UploadProfileImage = ({ userId }: UploadProfileImageProps) => {
       const formData = new FormData();
       formData.append("file", file);
       // formData.append("upload_preset", "profile_images");
-      const preset : string = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+      const preset: string = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
       formData.append("upload_preset", preset);
       const cloudRes = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -72,7 +72,7 @@ const UploadProfileImage = ({ userId }: UploadProfileImageProps) => {
   if (!user) return <p>Loading...</p>;
   console.log("user img:", user.image);
   return (
-    <div className="w-4/12 flex flex-col gap-2 items-center  bg-red-300">
+    <div className="w-4/12 flex flex-col gap-2 items-center">
       <input
         type="file"
         ref={fileInputRef}
@@ -85,15 +85,13 @@ const UploadProfileImage = ({ userId }: UploadProfileImageProps) => {
         className="flex items-center justify-center cursor-pointer w-15 h-15  border-2 border-white  rounded-full bg-linear-65 from-purple-500 to-pink-500 shadow-sm"
       >
         {user?.image ? (
-          <div className="relative w-full h-full rounded-full overflow-hidden">
-            <Image
-              src={user.image}
-              alt="profile"
-              fill
-              className=" object-cover"
-              sizes="60px"
-            />
-          </div>
+          <Image
+            src={user.image}
+            alt="profile"
+            className=" object-cover rounded-full "
+            width={60}
+            height={60}
+          />
         ) : (
           <span className="font-bold text-2xl text-white capitalize">
             {user.username.slice(0, 1)}

@@ -50,15 +50,15 @@ const ProfileContainer = ({ user }: ProfileContainerProps) => {
 
       <div className="flex items-center justify-center w-15 h-15  border-2 border-white  rounded-full bg-linear-65 from-purple-500 to-pink-500 shadow-sm">
         {user?.image ? (
-          <div className="relative w-full h-full rounded-full overflow-hidden">
+          
             <Image
               src={user.image}
               alt="profile"
-              fill
-              className="object-cover"
-              sizes="60px"
+              className="object-cover rounded-full"
+              width={60}
+              height={60}
             />
-          </div>
+          
         ) : (
           <span className="font-bold text-2xl text-white capitalize">
             {user.username.slice(0, 1)}
