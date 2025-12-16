@@ -7,6 +7,7 @@ import { updateUserSchema } from "@/utils/validationSchema";
 import { cookies } from "next/headers";
 import { setCookie } from "@/utils/generateToken";
 
+
 /**
  * @method DELETE
  * @route ~/api/users/profile/:id
@@ -75,6 +76,7 @@ export async function GET(request: NextRequest, { params }: Props) {
         username: true,
         createdAt: true,
         updatedAt: true,
+        image:true
       },
     });
 
@@ -107,6 +109,10 @@ export async function GET(request: NextRequest, { params }: Props) {
  * @access private (only user himself can  update his account/profile)
  */
 
+type BodyWithFile = UpdateUserDto & {
+  file? : string
+}
+
 export async function PUT(request: NextRequest, { params }: Props) {
   try {
     const { id } = await params;
@@ -129,11 +135,19 @@ export async function PUT(request: NextRequest, { params }: Props) {
     }
 
     // if userFromToken.id === user.id => get data from body
-    const body = (await request.json()) as UpdateUserDto;
+    const body = (await request.json()) as BodyWithFile;
+    console.log("body from client" , body);
     //لو الباس جايه فاضيه احذغها من body
     if(!body.password || body.password.trim() === ""){
       delete body.password
     }
+
+
+     //map file 
+    if(body.file){
+      body.image =body.file;
+      delete body.file;
+    } 
 
     const validation = await updateUserSchema.safeParse(body);
     if (!validation.success) {
@@ -144,22 +158,27 @@ export async function PUT(request: NextRequest, { params }: Props) {
     }
     // data from body after validation
     // const dataValidated = validation.data;
+    
+
     // if user want to change password لازم الاول اعمله تشفير قبل ارساله لقاعده البيانات
     if (body.password) {
       const salt = await bcrypt.genSalt(10);
       body.password = await bcrypt.hash(body.password, salt);
     }
 
+   console.log("updating user with body", body)
+
     const updateUser = await prisma.user.update({
       where: { id: parseInt(id) },
       data: {
         username: body.username,
         email: body.email,
-        ...(body.password && {password: body.password})
-        ,
+        ...(body.password && {password: body.password}),
+        ...(body.image !== undefined && {image : body.image})
+        // image : body.image ?? user.image
       },
     });
-    console.log("username updated" , updateUser.username);
+    console.log("username updated img from server" , updateUser.image);
     //you
     // call fun setCookie => set cookie with jwt token
     const cookie = setCookie({
