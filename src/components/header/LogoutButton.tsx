@@ -3,6 +3,7 @@ import { DOMAIN } from "@/utils/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { CiLogin } from "react-icons/ci";
 
 const LogoutButton = () => {
   const router = useRouter();
@@ -17,13 +18,13 @@ const LogoutButton = () => {
     }
   };
   return (
-    <button
+    <div
       onClick={logoutHandler}
-      // className="bg-gray-700 text-gray-200 px-2 py-1 cursor-pointer rounded"
-      className="w-full py-1 px-3 text-left cursor-pointer  hover:bg-gray-300 transition"
+      className="flex justify-between items-center py-1 px-3 text-gray-600 hover:text-gray-950 text-left cursor-pointer  hover:bg-gray-300 transition-colors"
     >
-      Logout
-    </button>
+      Log out
+      <CiLogin size={20}/>
+    </div>
   );
 };
 
