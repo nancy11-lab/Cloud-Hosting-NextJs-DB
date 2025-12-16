@@ -26,7 +26,9 @@ export interface UpdateUserDto {
   username?: string;
   email?: string;
   password?: string;
+  image? : string | null
 }
+
  // create new comment
 export interface CreateCommentDto {
   text: string;

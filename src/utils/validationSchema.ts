@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 // create Article Schema
 export const createArticleSchema = z.object({
@@ -40,14 +39,37 @@ export const updateUserSchema = z.object({
     .string()
     .min(2, { message: "username must be at least 2 characters" })
     .max(100, { message: "username should be less than 100 characters" })
-     .refine((val) => /^[a-zA-Z]{2}/.test(val), {
+    .refine((val) => /^[a-zA-Z]{2}/.test(val), {
       message: "username must start with at least 2 letters",
     })
     .optional(),
   email: z
     .string()
     .nonempty({ message: "Email is required" })
-    .min(3 , { message: "Email should be at least 3 characters long" })
+    .min(3, { message: "Email should be at least 3 characters long" })
+    .max(200)
+    .email({ message: "invalid email format" })
+    .optional(),
+  password: z
+    .string()
+    .min(6, { message: "password must be at least 6 characters" })
+    .optional(),
+  image: z.string().nullable().optional(),
+});
+//update user profile schema
+export const updateUserSchemaClient = z.object({
+  username: z
+    .string()
+    .min(2, { message: "username must be at least 2 characters" })
+    .max(100, { message: "username should be less than 100 characters" })
+    .refine((val) => /^[a-zA-Z]{2}/.test(val), {
+      message: "username must start with at least 2 letters",
+    })
+    .optional(),
+  email: z
+    .string()
+    .nonempty({ message: "Email is required" })
+    .min(3, { message: "Email should be at least 3 characters long" })
     .max(200)
     .email({ message: "invalid email format" })
     .optional(),
