@@ -1,5 +1,6 @@
-import { User } from "@/generated/prisma/client";
+import { User } from "@/generated/prisma";
 import { DOMAIN } from "@/utils/constants";
+
 
 export async function getUserProfile(
   token: string,
@@ -17,3 +18,4 @@ export async function getUserProfile(
 
   return response.json();
 }
+
