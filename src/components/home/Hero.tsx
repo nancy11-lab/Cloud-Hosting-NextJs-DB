@@ -1,38 +1,64 @@
-import Image from "next/image";
+
 import { TiTick } from "react-icons/ti";
-import cloudImage from "../../../public/cloud-hosting.png";
-import styles from "./hero.module.css";
+
 const Hero = () => {
   return (
-    <div
-      className={`flex items-center justify-around ${styles.hero}`}
-    >
-      {/* heroLeft */}
-      <div className={styles.heroLeft}>
-        <h1 className="text-3xl font-bold text-black capitalize mb-3">
-          Cloud Hosting
-        </h1>
-        <p className="capitalize text-lg md:text-xl text-gray-600">
-          the best web hosting solution for your online success
+    <>
+      <div className="py-7 px-4 mb-3 bg-gray-50 rounded-lg md:w-3/4 md:px-0 md:rounded-none md:bg-transparent">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">CloudPosts</h1>
+        <p className="text-lg text-gray-700 mb-6">
+          Discover and explore high-quality technical articles with ease.
         </p>
-        <div className="p-3 mt-3">
-          <div className="capitalize text-gray-700 text-md font-bold flex items-center gap-1 mb-2">
-            <TiTick /> easy to use control panel
-          </div>
-          <div className="capitalize text-gray-700 text-md font-bold flex items-center gap-1  mb-2">
-            <TiTick />
-            secure hosting
-          </div>
-          <div className="capitalize text-gray-700 text-md font-bold flex items-center gap-1 ">
-            <TiTick /> website maintenance
-          </div>
+        <ul className=" px-4 text-gray-700 flex flex-col gap-4 text-left md:text-left text-md font-bold">
+          <li className="flex  gap-1">
+            <TiTick size={25} className="text-green-400" />
+            Read articles on programming languages, frameworks, and development
+            tools
+          </li>
+          <li className="flex  gap-1">
+            <TiTick size={25} className="text-green-400" />
+            Engage with the community by leaving comments (for registered users)
+          </li>
+          <li className="flex  gap-1">
+            <TiTick size={25} className="text-green-400" />
+            Enjoy a clean, user-friendly interface for smooth reading
+          </li>
+        </ul>
+      </div>
+      {/* What You Will Find */}
+      <h2 className="mt-10 text-center md:text-left font-bold text-2xl text-gray-700">
+        What You Will Find
+      </h2>
+      <div className="mt-5 grid gap-6  sm:grid-cols-2  lg:grid-cols-3">
+        <div className="px-3 py-2 bg-gray-300 rounded-md">
+          <h3 className="text-lg font-bold mb-2 text-purple-500">
+            Curated Content
+          </h3>
+          <p className="text-gray-600 text-sm">
+            Well-written articles focused on real-world development topics.
+          </p>
+        </div>
+
+        <div className="px-3 py-2 bg-gray-300 rounded-md">
+          <h3 className="text-lg font-bold mb-2 text-purple-500">
+            Developer Community
+          </h3>
+          <p className="text-gray-600 text-sm">
+            Registered users can share thoughts and discuss articles through
+            comments.
+          </p>
+        </div>
+
+        <div className="px-3 py-2 bg-gray-300 rounded-md">
+          <h3 className="text-lg font-bold mb-2 text-purple-500">
+            Clean Reading Experience
+          </h3>
+          <p className="text-gray-600 text-sm">
+            Minimal design optimized for readability and focus.
+          </p>
         </div>
       </div>
-      {/* heroRight */}
-      <div>
-        <Image src={cloudImage} alt="cloud" width={500} height={500} loading="eager"/>
-      </div>
-    </div>
+    </>
   );
 };
 
