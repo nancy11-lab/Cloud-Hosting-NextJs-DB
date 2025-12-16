@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import EditProfileForm from "./EditProfileForm";
 import DeleteProfileButton from "./DeleteProfileButton";
-
+import UploadProfileImage from "./UploadProfileImage";
 
 const ProfilePage = async () => {
   const cookieStore = await cookies();
@@ -15,7 +15,7 @@ const ProfilePage = async () => {
   }
   const payload = await verifyTokenFromPage(token);
   if (!payload) redirect("/");
-  const user : User = await getUserProfile(token,payload.id);
+  const user: User = await getUserProfile(token, payload.id);
 
   return (
     <section className="fix-height container m-auto px-7 py-2 ">
@@ -33,16 +33,35 @@ const ProfilePage = async () => {
           </span>
         </h3>
       </div>
+      {/* user-Avatar */}
+      <section className="bg-white border-1 border-gray-300 rounded-md mt-7">
+        <div className=" flex justify items-center gap-3  px-2 sm:px-7 py-2 ">
+          {/*left-section info */}
+          <div className=" w-8/12">
+            <h2 className="font-bold text-2xl text-gray-700 mb-4 ">Avater</h2>
+            <p className="text-md md:text-lg text-black">This is your avatar.</p>
+            <p className="text-md md:text-lg text-black">
+              Click on the avatar to upload a custom one from your files.
+            </p>
+          </div>
+
+          {/*right-section image */}
+          <UploadProfileImage userId={user.id} />
+        </div>
+        <p className="py-4 bg-gray-200 px-2 sm:px-7">
+          An avatar is optional but strongly recommended.
+        </p>
+      </section>
       {/* edit-profile */}
       <div className="mt-10 border-1 border-gray-300 px-5 py-5 rounded-md">
         <h2 className="mb-5 text-2xl font-bold text-purple-600 ">
           Edit Profile
         </h2>
-       <EditProfileForm user={user}/>
+        <EditProfileForm user={user} />
       </div>
       {/* delete-Profile */}
       <div className="mt-5 mb-7 flex justify-end ">
-       <DeleteProfileButton userId={user.id}/>
+        <DeleteProfileButton userId={user.id} />
       </div>
     </section>
   );
