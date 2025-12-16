@@ -3,7 +3,7 @@ import ButtonSpinner from "@/components/ButtonSpinner";
 import { User } from "@/generated/prisma";
 import { DOMAIN } from "@/utils/constants";
 import { UpdateUserDto } from "@/utils/dtos";
-import { updateUserSchema } from "@/utils/validationSchema";
+import {  updateUserSchemaClient } from "@/utils/validationSchema";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
@@ -39,7 +39,7 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
     if (password.trim() !== "") {
       dataToSend.password = password;
     }
-    const validation = updateUserSchema.safeParse(dataToSend);
+    const validation = updateUserSchemaClient.safeParse(dataToSend);
     if (!validation.success) {
       toast.error(validation.error.issues[0].message);
       return;
