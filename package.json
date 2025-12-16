@@ -12,6 +12,7 @@
     "@prisma/client": "^6.19.0",
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.8.0",
     "cookie": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "next": "16.0.7",
@@ -21,6 +22,7 @@
     "react-markdown": "^10.1.0",
     "react-toastify": "^11.0.5",
     "remark-gfm": "^4.0.1",
+    "swr": "^2.3.8",
     "zod": "^4.1.12"
   },
   "devDependencies": {
