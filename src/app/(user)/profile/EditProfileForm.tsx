@@ -3,7 +3,7 @@ import ButtonSpinner from "@/components/ButtonSpinner";
 import { User } from "@/generated/prisma";
 import { DOMAIN } from "@/utils/constants";
 import { UpdateUserDto } from "@/utils/dtos";
-import {  updateUserSchemaClient } from "@/utils/validationSchema";
+import { updateUserSchemaClient } from "@/utils/validationSchema";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
@@ -20,36 +20,58 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const confirmRef = useRef<HTMLInputElement>(null);
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
     inputRef.current?.focus();
   };
 
+  const toggleShowConfirmPass = () => {
+    setShowConfirmPass((prev) => !prev);
+    confirmRef.current?.focus();
+  };
+
   const editFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const dataToSend: UpdateUserDto = {
+    if (
+      username === user.username &&
+      email === user.email &&
+      password.trim() === ""
+    ) {
+      toast.error("You have not change anything to update");
+      return;
+    }
+
+    const dataToSend: UpdateUserDto & { confirmPassword?: string } = {
       username,
       email,
     };
     if (password.trim() !== "") {
       dataToSend.password = password;
+      dataToSend.confirmPassword = confirmPassword;
     }
+
     const validation = updateUserSchemaClient.safeParse(dataToSend);
     if (!validation.success) {
       toast.error(validation.error.issues[0].message);
       return;
     }
+
     try {
       setLoading(true);
       await axios.put(`${DOMAIN}/api/users/profile/${user.id}`, dataToSend);
+      toast.success("Update Successfully");
       router.replace("/");
       setLoading(false);
       setPassword("");
+      setConfirmPassword("");
       router.refresh();
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,6 +101,7 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
         placeholder="Enter your email"
         className="border-2 border-gray-300 rounded-md p-2 focus-within:outline-purple-400"
       />
+      {/* password Field*/}
       <div className="relative">
         <input
           type={showPassword ? "text" : "password"}
@@ -95,6 +118,25 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
           className="text-gray-500 hover:text-gray-700 transition-colors absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
         >
           {showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />}
+        </button>
+      </div>
+      {/* confirm-password Field*/}
+      <div className="relative">
+        <input
+          type={showConfirmPass ? "text" : "password"}
+          ref={confirmRef}
+          onBlur={() => setShowConfirmPass(false)}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirm your password"
+          className="w-full pr-10 border-2 border-gray-300 rounded-md p-2 focus-within:outline-purple-400"
+        />
+        <button
+          type="button"
+          onClick={toggleShowConfirmPass}
+          className="text-gray-500 hover:text-gray-700 transition-colors absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+        >
+          {showConfirmPass ? <FiEye size={20} /> : <FiEyeOff size={20} />}
         </button>
       </div>
       <button
