@@ -45,9 +45,9 @@ const SingleArticlePage = async ({ params }: SingleArticlePageProps) => {
   // console.log(article.description);
 
   return (
-    <section className="fix-height container mx-auto w-full px-5 pt-8 md:w-3/4 ">
+    <section className="fix-height container mx-auto w-full px-3 sm:px-5 pt-8 md:w-3/4 ">
       {/* show single-Article */}
-      <div className="bg-white p-7 rounded-lg mb-7">
+      <div className="bg-white py-7 px-3 sm:px-7 rounded-lg mb-7">
         <h1 className="text-3xl font-bold text-gray-700 mb-2 capitalize">
           {article.title}
         </h1>
@@ -56,7 +56,7 @@ const SingleArticlePage = async ({ params }: SingleArticlePageProps) => {
         </div>
 
         <div
-          className="text-gray-800 text-xl mt-5 prose prose-lg  [&_h1]:text-blue-700
+          className="text-gray-800 text-lg sm:text-xl mt-5 prose prose-lg  [&_h1]:text-blue-700
               [&_h1]:font-extrabold
               [&_h1]:mb-2
 
