@@ -136,7 +136,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
     // if userFromToken.id === user.id => get data from body
     const body = (await request.json()) as BodyWithFile;
-    console.log("body from client" , body);
+    // console.log("body from client" , body);
     //لو الباس جايه فاضيه احذغها من body
     if(!body.password || body.password.trim() === ""){
       delete body.password
@@ -166,7 +166,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
       body.password = await bcrypt.hash(body.password, salt);
     }
 
-   console.log("updating user with body", body)
+  //  console.log("updating user with body", body)
 
     const updateUser = await prisma.user.update({
       where: { id: parseInt(id) },
@@ -175,7 +175,6 @@ export async function PUT(request: NextRequest, { params }: Props) {
         email: body.email,
         ...(body.password && {password: body.password}),
         ...(body.image !== undefined && {image : body.image})
-        // image : body.image ?? user.image
       },
     });
     console.log("username updated img from server" , updateUser.image);
