@@ -18,7 +18,7 @@ const ProfilePage = async () => {
   const user: User = await getUserProfile(token, payload.id);
 
   return (
-    <section className="fix-height container m-auto px-7 py-2 ">
+    <section className="fix-height container m-auto px-3 sm:px-7 py-2 ">
       <div className="mt-3 border-1 border-gray-300 p-2 rounded-md">
         <h2 className="text-2xl text-gray-950 font-bold px-1  sm:px-3  mb-3">
           Username:{" "}
