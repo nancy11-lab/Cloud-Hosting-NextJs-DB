@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
+import { MdDeleteForever } from "react-icons/md";
 
 interface UploadProfileImageProps {
   userId: number;
@@ -82,16 +83,19 @@ const UploadProfileImage = ({ userId }: UploadProfileImageProps) => {
       {/* upload-image--button */}
       <button
         onClick={() => fileInputRef.current?.click()}
-        className="flex items-center justify-center cursor-pointer w-15 h-15  border-2 border-white  rounded-full bg-linear-65 from-purple-500 to-pink-500 shadow-sm"
+        className="relative z-0 flex items-center justify-center cursor-pointer w-15 h-15  border-2 border-white  rounded-full bg-linear-65 from-purple-500 to-pink-500 shadow-sm overflow-hidden"
       >
         {user?.image ? (
-          <Image
+      
+           <Image
             src={user.image}
             alt="profile"
-            className=" object-cover rounded-full "
-            width={60}
-            height={60}
+            className=" object-cover"
+            fill
+            sizes="60px"
+            priority={false}
           />
+         
         ) : (
           <span className="font-bold text-2xl text-white capitalize">
             {user.username.slice(0, 1)}
@@ -102,9 +106,10 @@ const UploadProfileImage = ({ userId }: UploadProfileImageProps) => {
       {user.image && (
         <button
           onClick={removeImageHandler}
-          className="px-2 py-1 cursor-pointer rounded-lg font-bold text-white bg-gray-500 border-1 border-gray-400"
+          className="px-2 py-1 cursor-pointer rounded-full  bg-gray-300 border-1 border-white shadow-sm"
         >
-          Remove Image
+          {/* Remove Image */}
+          <MdDeleteForever size={30} className="text-red-500"/>
         </button>
       )}
     </div>
