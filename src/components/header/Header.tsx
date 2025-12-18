@@ -6,7 +6,7 @@ import { verifyTokenFromPage } from "@/utils/verifyToken";
 import ProfileContainer from "./ProfileContainer";
 import prisma from "@/utils/db";
 import { User } from "@/generated/prisma";
-import { redirect } from "next/navigation";
+
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +35,7 @@ const Header = async () => {
         <div className={styles.right}>
           {user ? (
             <>
-              <ProfileContainer user={user} />
+              <ProfileContainer userId={user.id} />
             </>
           ) : (
             <>
