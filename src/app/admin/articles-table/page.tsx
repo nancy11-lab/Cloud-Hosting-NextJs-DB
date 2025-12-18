@@ -11,10 +11,11 @@ import prisma from "@/utils/db";
 interface AdminArticlesTableProps {
   searchParams: Promise<{ pageNumber: string }>;
 }
-const AdminArticlesTable = async ({ searchParams,}: AdminArticlesTableProps) => {
+const AdminArticlesTable = async ({
+  searchParams,
+}: AdminArticlesTableProps) => {
   const { pageNumber } = await searchParams;
 
- 
   // send request to get Articles
   const articles: Article[] = await getArticles(pageNumber);
   // send request to get count of articles in db
@@ -30,9 +31,7 @@ const AdminArticlesTable = async ({ searchParams,}: AdminArticlesTableProps) => 
         <thead className="border-t-2 border-b-2 border-gray-500 lg:text-xl ">
           <tr>
             <th className="p-1 lg:p-2 ">Title</th>
-            <th className="hidden lg:inline-block p-1 lg:p-2">
-              Created At
-            </th>
+            <th className="hidden lg:inline-block p-1 lg:p-2">Created At</th>
             <th className="">Actions</th>
             <th className="hidden lg:inline-block "></th>
           </tr>
@@ -44,15 +43,16 @@ const AdminArticlesTable = async ({ searchParams,}: AdminArticlesTableProps) => 
               <td className="hidden lg:inline-block text-gray-700 p-3 text-normal">
                 {new Date(article.createdAt).toDateString()}
               </td>
-              <td className="p-3">
-                {/* end point not work */}
-                <Link
-                  href={`/admin/articles-table/edit/${article.id}`}
-                  className="bg-green-600 text-white rounded-lg py-1 px-2 inline-block text-center  me-2 lg:me-3 hover:bg-green-800  transition duration-300 cursor-pointer"
-                >
-                  Edit
-                </Link>
-                <DeleteArticleButton articleId={article.id}/>
+              <td className="p-3 ">
+                <div className="flex flex-col items-center flex-wrap sm:flex-row gap-2">
+                  <Link
+                    href={`/admin/articles-table/edit/${article.id}`}
+                    className="w-15 bg-green-600  text-white rounded-lg py-1 px-2 inline-block text-center   lg:me-3 hover:bg-green-800  transition duration-300 cursor-pointer"
+                  >
+                    Edit
+                  </Link>
+                  <DeleteArticleButton articleId={article.id} />
+                </div>
               </td>
               <td className="hidden lg:inline-block p-3">
                 <Link
@@ -67,7 +67,11 @@ const AdminArticlesTable = async ({ searchParams,}: AdminArticlesTableProps) => 
         </tbody>
       </table>
       <div className="mt-7">
-        <Pagination pages={pages} route="/admin/articles-table" pageNumber={parseInt(pageNumber)}/>
+        <Pagination
+          pages={pages}
+          route="/admin/articles-table"
+          pageNumber={parseInt(pageNumber)}
+        />
       </div>
     </section>
   );

@@ -28,7 +28,7 @@ const DeleteArticleButton = ({ articleId }: DeleteArticleButtonProps) => {
   return (
     <div
       onClick={deleteArticleHandler}
-      className="bg-red-600 text-white rounded-lg cursor-pointer inline-block text-center py-1 px-2 hover:bg-red-800 transition duration-300"
+      className="w-15 bg-red-600 text-white rounded-lg cursor-pointer inline-block text-center py-1 px-2 hover:bg-red-800 transition duration-300"
     >
       Delete
     </div>
