@@ -29,7 +29,7 @@ const DeleteProfileButton = ({ userId }: DeleteProfileButtonProps) => {
   return (
     <button
       onClick={deleteProfileHandler}
-      className="bg-red-600 hover:bg-red-800 transition-colors text-white font-bold text-2xl cursor-pointer px-4 py-3 rounded-lg "
+      className="bg-red-600 hover:bg-red-800 transition-colors text-white font-bold text-lg md:text-xl cursor-pointer px-4 py-3 rounded-lg "
     >
       Delete Profile
     </button>

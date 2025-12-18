@@ -3,6 +3,7 @@
   background-color: rgb(227, 225, 225);
   border-bottom: 3px solid rgb(144, 144, 144);
   position: fixed;
+  z-index: 50;
   width: 100%;
   top: 0;
   left: 0;

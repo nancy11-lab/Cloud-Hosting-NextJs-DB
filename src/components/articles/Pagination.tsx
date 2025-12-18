@@ -18,14 +18,14 @@ const Pagination = ({ pages, pageNumber, route }: PaginationProps) => {
       {pageNumber === 1 ? (
         <button
           disabled
-          className="border border-gray-700 text-gray-400 bg-gray-300 py-1 px-3 font-bold text-xl cursor-not-allowed  "
+          className="border border-gray-700 text-gray-400 bg-gray-300 py-1 px-2 font-bold text-xl cursor-not-allowed  "
         >
           Prev
         </button>
       ) : (
         <Link
           href={`${route}?pageNumber=${prev}`}
-          className="border border-gray-700 text-gray-700 py-1 px-3 font-bold text-xl cursor-pointer hover:bg-gray-300 transition duration-300"
+          className="border border-gray-700 text-gray-700 py-1 px-2 font-bold text-xl cursor-pointer hover:bg-gray-300 transition duration-300"
         >
           Prev
         </Link>
@@ -36,7 +36,7 @@ const Pagination = ({ pages, pageNumber, route }: PaginationProps) => {
           href={`${route}?pageNumber=${page}`}
           className={`${
             pageNumber === page ? "bg-gray-400" : ""
-          } border border-gray-700 text-gray-700 py-1 px-3 font-bold text-xl cursor-pointer hover:bg-gray-300 transition duration-300`}
+          } border border-gray-700 text-gray-700 py-1 px-2 sm:px-3 font-bold text-xl cursor-pointer hover:bg-gray-300 transition duration-300`}
           key={page}
         >
           {page}
@@ -46,14 +46,14 @@ const Pagination = ({ pages, pageNumber, route }: PaginationProps) => {
       {pageNumber === pages ? (
         <button
           disabled
-          className="border border-gray-700 text-gray-400 bg-gray-300 py-1 px-3 font-bold text-xl cursor-not-allowed  "
+          className="border border-gray-700 text-gray-400 bg-gray-300 py-1 px-2 font-bold text-xl cursor-not-allowed  "
         >
           Next
         </button>
       ) : (
         <Link
           href={`${route}?pageNumber=${next}`}
-          className="border border-gray-700 text-gray-700 py-1 px-3 font-bold text-xl cursor-pointer hover:bg-gray-300 transition duration-300"
+          className="border border-gray-700 text-gray-700 py-1 px-2 font-bold text-xl cursor-pointer hover:bg-gray-300 transition duration-300"
         >
           Next
         </Link>

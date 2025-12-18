@@ -27,15 +27,16 @@ const CommentItem = ({ comment , userId}: CommentItemProps) => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch(error : any){
-       toast.error(error?.response?.data.message)
+       toast.error(error?.response?.data.message);
+       console.log(error);
     }
   }
 
   return (
     <div className="mb-5 rounded-lg p-3 bg-gray-200 border-2 border-gray-300 ">
       <div className="flex items-center justify-between mb-2">
-        {/* hard-coded */}
-        <strong className="text-gray-800 uppercase">{comment.user.username}</strong>
+        {/* username of user  add-comment*/}
+        <strong className="text-gray-800 capitalize">{comment.user.username}</strong>
         <span className="bg-yellow-700 px-1 text-white rounded-lg">
           {new Date(comment.createdAt).toDateString()}
         </span>
