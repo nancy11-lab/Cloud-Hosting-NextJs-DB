@@ -7,6 +7,7 @@ import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { FiEye } from "react-icons/fi";
 import { FiEyeOff } from "react-icons/fi";
+import { registerSchema } from "@/utils/validationSchema";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -20,14 +21,17 @@ const RegisterForm = () => {
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
     inputRef.current?.focus();
-  }
+  };
 
   const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "") return toast.error("Username is required");
-    if (email === "") return toast.error("Email is required");
-    if (password === "") return toast.error("Password is required");
-    // console.log("username: " , username,"Email: " , email , "password: " , password);
+   
+    
+    const validation = registerSchema.safeParse({ username, email, password });
+    if (!validation.success) {
+      toast.error(validation.error.issues[0].message);
+      return;
+    }
 
     try {
       setLoading(true);
@@ -36,6 +40,7 @@ const RegisterForm = () => {
         email,
         password,
       });
+      toast.success("Registeration Successfully");
       router.replace("/");
       setLoading(false);
       router.refresh();
@@ -76,8 +81,12 @@ const RegisterForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full pr-10 border rounded p-2 text-xl border-gray-200 focus-within:outline-blue-600"
         />
-        <button type="button"  onClick={toggleShowPassword} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer">
-          {showPassword ? <FiEye size={20}/> : <FiEyeOff size={20} />}
+        <button
+          type="button"
+          onClick={toggleShowPassword}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
+        >
+          {showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />}
         </button>
       </div>
       <button
