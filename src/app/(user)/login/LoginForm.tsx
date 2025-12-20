@@ -20,7 +20,16 @@ const LoginForm = () => {
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
-    inputRef.current?.focus();
+    // inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      const inputPassFiled = inputRef.current;
+      if(!inputPassFiled) return;
+
+      const cursorPosition = inputPassFiled.value.length;
+      inputPassFiled.focus();
+
+      inputPassFiled.setSelectionRange(cursorPosition , cursorPosition)
+    })
   };
 
   const formSubmitHandler = async (e: React.FormEvent) => {

@@ -29,12 +29,30 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
-    inputRef.current?.focus();
+    // inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      const inputPassFiled = inputRef.current;
+      if(!inputPassFiled) return;
+
+      const cursorPosition = inputPassFiled.value.length;
+      inputPassFiled.focus();
+
+      inputPassFiled.setSelectionRange(cursorPosition , cursorPosition)
+    })
   };
 
   const toggleShowConfirmPass = () => {
     setShowConfirmPass((prev) => !prev);
-    confirmRef.current?.focus();
+    // confirmRef.current?.focus();
+    requestAnimationFrame(() => {
+      const inputConfirmFiled = confirmRef.current;
+      if(!inputConfirmFiled) return;
+
+      const cursorPosition = inputConfirmFiled.value.length;
+      inputConfirmFiled.focus();
+
+      inputConfirmFiled.setSelectionRange(cursorPosition , cursorPosition)
+    })
   };
 
   const editFormHandler = async (e: React.FormEvent) => {
