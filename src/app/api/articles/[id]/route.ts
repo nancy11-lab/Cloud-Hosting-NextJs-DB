@@ -1,7 +1,9 @@
 import prisma from "@/utils/db";
 import { UpdateArticleDto } from "@/utils/dtos";
+import { updateArticleSchema } from "@/utils/validationSchema";
 import { verifyToken } from "@/utils/verifyToken";
 import { NextRequest, NextResponse } from "next/server";
+import { toast } from "react-toastify";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -86,11 +88,21 @@ export async function PUT(request: NextRequest, { params }: Props) {
     }
 
     const body = (await request.json()) as UpdateArticleDto;
+
+    const validation = updateArticleSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { message: validation.error.issues[0].message },
+        { status: 400 }
+      );
+    }
+
     const updatedArticle = await prisma.article.update({
       where: { id: parseInt(id) },
       data: {
         title: body.title,
         description: body.description,
+        categories: body.categories,
       },
     });
 
@@ -140,8 +152,6 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     await prisma.article.delete({
       where: { id: parseInt(id) },
     });
-
-   
 
     return NextResponse.json({ message: "Article Deleted" }, { status: 200 });
   } catch (error) {

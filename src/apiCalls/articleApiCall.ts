@@ -3,10 +3,15 @@ import { DOMAIN } from "@/utils/constants";
 import { SingleArticle } from "@/utils/types";
 
 // Get Articles based on pageNumber
-export async function getArticles(pageNumber: string | undefined): Promise<Article[]> {
+export async function getArticles(pageNumber: string | undefined , category?: string): Promise<Article[]> {
 
  try{
-   const response = await fetch(`${DOMAIN}/api/articles?pageNumber=${pageNumber}`);
+  let url = `${DOMAIN}/api/articles?pageNumber=${pageNumber}`;
+  if(category && category !== "all")
+    url += `&category=${category}`
+
+
+   const response = await fetch(url);
 
   if (!response.ok) {
     throw Error("Failed to fetch articles");
@@ -19,8 +24,14 @@ export async function getArticles(pageNumber: string | undefined): Promise<Artic
 }
 
 // Get Articles  count
-export async function getArticlesCount(): Promise<number> {
-  const response = await fetch(`${DOMAIN}/api/articles/count`);
+export async function getArticlesCount(category?: string): Promise<number> {
+
+  let url =`${DOMAIN}/api/articles/count`;
+  if(category && category !== "all"){
+    url += `?category=${category}`
+  }
+
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw Error("Failed to get articles count ");

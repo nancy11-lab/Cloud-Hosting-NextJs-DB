@@ -1,4 +1,3 @@
-
 import prisma from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +11,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const count = await prisma.article.count();
+    const category = request.nextUrl.searchParams.get("category"); // ممكن تكون undefined
+    let count;
+
+    if (category && category !== "add") {
+      count = await prisma.article.count({
+        where: {
+          categories: {
+            has: category, // prisma array filter
+          },
+        },
+      });
+    } else {
+      count = await prisma.article.count();
+    }
+    // const count = await prisma.article.count();
     return NextResponse.json({ count }, { status: 200 });
     
   } catch (error) {

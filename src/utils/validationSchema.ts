@@ -12,6 +12,41 @@ export const createArticleSchema = z.object({
     .string()
     .nonempty({ message: "Description is required" })
     .min(10, { message: "Description should be at least 10 characters" }),
+
+  categories: z
+    .array(
+      z
+        .string()
+        .min(4, { message: "Each category must be at least 4 characters" })
+        .regex(/^[A-Za-z]{4}/, "Each category must start with 4 letters")
+    )
+    .nonempty({ message: "At least one category is requred" }),
+});
+
+// Update Article Schema
+export const updateArticleSchema = z.object({
+  title: z
+    .string()
+    .nonempty({ message: "Title is required" })
+    .min(2, { message: "Title should be at least 2 characters" })
+    .max(200, { message: "Title should be less than 200 characters" })
+    .optional(),
+
+  description: z
+    .string()
+    .nonempty({ message: "Description is required" })
+    .min(10, { message: "Description should be at least 10 characters" })
+    .optional(),
+
+  categories: z
+    .array(
+      z
+        .string()
+        .min(4, { message: "Each category must be at least 4 characters" })
+        .regex(/^[A-Za-z]{4}/, "Each category must start with 4 letters")
+    )
+    .nonempty({ message: "At least one category is requred" })
+    .optional(),
 });
 
 // Register Schema

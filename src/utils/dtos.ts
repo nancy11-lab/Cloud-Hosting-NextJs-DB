@@ -2,12 +2,14 @@
 export interface CreateArticleDto {
   title: string;
   description: string;
+  categories: string[];
 }
 
 // Update article
 export interface UpdateArticleDto {
   title?: string;
   description?: string;
+  categories? : string[]
 }
 
 // Register new user
@@ -26,13 +28,13 @@ export interface UpdateUserDto {
   username?: string;
   email?: string;
   password?: string;
-  image? : string | null
+  image?: string | null;
 }
 
- // create new comment
+// create new comment
 export interface CreateCommentDto {
   text: string;
-  articleId : number;
+  articleId: number;
 }
 
 // update comment

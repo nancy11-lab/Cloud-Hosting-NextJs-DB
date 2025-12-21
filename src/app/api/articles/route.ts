@@ -18,11 +18,20 @@ export async function GET(request: NextRequest) {
   try {
     const pageNumber = request.nextUrl.searchParams.get("pageNumber") || "1";
     // console.log(pageNumber);
-    
+    const category = request.nextUrl.searchParams.get("category"); //اختياري
+
+    const whereClause =
+      category && category !== "all"
+        ? {
+            categories: { has: category },
+          }
+        : {};
+
     const articles = await prisma.article.findMany({
+      where: whereClause,
       skip: ARTICLE_PER_PAGE * (parseInt(pageNumber) - 1),
       take: ARTICLE_PER_PAGE,
-      orderBy : {createdAt : "desc"}
+      orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(articles, { status: 200 });
   } catch (error) {
@@ -44,14 +53,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const user = verifyToken(request);
-    if(user === null || user.isAdmin === false){
+    if (user === null || user.isAdmin === false) {
       return NextResponse.json(
-        {message : "only admin , access denied"},
-        {status : 403}
-      )
+        { message: "only admin , access denied" },
+        { status: 403 }
+      );
     }
     const body = (await request.json()) as CreateArticleDto;
-     console.log("body recived",body);
+    console.log("body recived", body);
 
     if (typeof body.title !== "string") {
       return NextResponse.json(
@@ -77,6 +86,7 @@ export async function POST(request: NextRequest) {
       data: {
         title: body.title,
         description: body.description,
+        categories: body.categories,
       },
     });
 
